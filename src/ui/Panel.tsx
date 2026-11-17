@@ -4,6 +4,7 @@ import { objects, type ObjId } from '../data/objects'
 import { useCasa, vociInLista, daFare, grado } from '../data/casa'
 import BloccoAttivita from './Attivita'
 import Calendario from './Calendario'
+import Raccolta from './Raccolta'
 import { livelli, nomeLivello, type Livello, type Prodotto } from '../data/entita'
 
 const pieni: Record<Livello, number> = { pieno: 4, meta: 2, quasi: 1, finito: 0 }
@@ -124,6 +125,7 @@ export default function Panel() {
         <Calendario />
       ) : null}
       {conAttivita && <BloccoAttivita e={id} />}
+      {id === 'bidoni' && <Raccolta />}
       {storico.length > 0 && (
         <div className="storico">
           <h3>Storico</h3>

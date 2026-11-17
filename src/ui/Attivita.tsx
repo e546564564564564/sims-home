@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useCasa } from '../data/casa'
-import type { ObjId } from '../data/objects'
+import { suggerimenti, type ObjId } from '../data/objects'
 import type { Attivita } from '../data/entita'
 import { aggiungi, giorniA, oggi, quando, testoOgni, type Ogni } from '../data/tempo'
 
@@ -45,6 +45,11 @@ function Nuova({ e, chiudi }: { e: ObjId; chiudi: () => void }) {
   return (
     <form className="nuova" onSubmit={(ev) => { ev.preventDefault(); salva() }}>
       <input value={nome} onChange={(ev) => setNome(ev.target.value)} placeholder="Cosa c'è da fare? es. Pulire il filtro" autoFocus enterKeyHint="done" />
+      {!nome && suggerimenti[e] && (
+        <div className="chips">
+          {suggerimenti[e]!.map((x) => <button type="button" key={x} onClick={() => setNome(x)}>{x}</button>)}
+        </div>
+      )}
       <div className="scelta due">
         <button type="button" className={!ripeti ? 'su' : ''} onClick={() => setRipeti(false)}>Una volta</button>
         <button type="button" className={ripeti ? 'su' : ''} onClick={() => setRipeti(true)}>Si ripete</button>

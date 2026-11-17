@@ -43,3 +43,21 @@ export const objects: Record<ObjId, Obj> = {
   armadioPulizie: { id: 'armadioPulizie', nome: 'Armadio delle pulizie', stanza: 'ripostiglio', sotto: 'Ripostiglio · scorte per pulire', fronte: [-1, 0] },
   lista: { id: 'lista', nome: 'Lista della spesa', stanza: 'cucina', sotto: 'Cucina · blocchetto sul frigo', fronte: [0, -1] },
 }
+
+// Nomi suggeriti nel modulo "+ Attività" (non sono attività predefinite: si toccano per riempire il nome).
+export const suggerimenti: Partial<Record<ObjId, string[]>> = {
+  letto: ['Cambiare le lenzuola', 'Girare il materasso'],
+  armadio: ['Cambio di stagione', 'Lavare le coperte'],
+  mobileBagno: ['Cambiare gli asciugamani', 'Cambiare i tappetini'],
+  lavatrice: ['Pulire il filtro', 'Lavaggio a vuoto', 'Lenzuola e asciugamani'],
+  asciugatrice: ['Pulire il filtro', 'Svuotare l\'acqua'],
+  robot: ['Pulire le spazzole', 'Svuotare il serbatoio', 'Cambiare il filtro'],
+  frigo: ['Pulire il frigo', 'Sbrinare il congelatore'],
+  forno: ['Pulire il forno'],
+  lavastoviglie: ['Pulire il filtro', 'Lavaggio a vuoto'],
+  termostato: ['Manutenzione caldaia'],
+  bidoni: ['Lavare i bidoni'],
+}
+
+// Tipi di rifiuto della raccolta differenziata, con il colore del bidone.
+export const rifiuti: Record<string, string> = { Umido: '#8B6B4A', Plastica: '#E9C94A', Carta: '#5B8DC9', Vetro: '#6FA67A', Secco: '#8E9196' }

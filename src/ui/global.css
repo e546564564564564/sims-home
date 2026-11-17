@@ -92,3 +92,8 @@ body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; co
 .storico { display: flex; flex-direction: column; }
 .gcal { flex: 1; min-height: 200px; width: 100%; border: none; border-radius: 16px; background: #fff; }
 .apri { text-align: center; text-decoration: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { border: none; background: #fff; color: #6B5D52; font: 600 13px system-ui, sans-serif; border-radius: 14px; padding: 8px 11px; display: flex; align-items: center; gap: 6px; }
+.chips button.su { background: #C9A133; color: #fff; }
+.chips i { width: 10px; height: 10px; border-radius: 3px; }
+.scelta.sette { grid-template-columns: repeat(7, 1fr); }

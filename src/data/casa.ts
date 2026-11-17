@@ -157,6 +157,10 @@ export const useCasa = create<Casa>((set, get) => {
   }
 })
 
+// Bidoni da esporre: dalla sera prima (dalle 17) fino a quando si segna "Fatto".
+export const bidoniFuori = (e?: Entita) =>
+  (e?.attivita ?? []).filter((a) => a.nome.startsWith('Esporre: ') && (giorniA(a.prossima) <= 0 || (giorniA(a.prossima) === 1 && new Date().getHours() >= 17))).map((a) => a.nome.slice(9))
+
 // Attività da fare (oggi o già passate) di un'entità.
 export const daFare = (e?: Entita) => (e?.attivita ?? []).filter((a) => giorniA(a.prossima) <= 0)
 
