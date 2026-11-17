@@ -13,6 +13,7 @@ const inventari: Partial<Record<ObjId, Prodotto[]>> = {
   ],
   dispensa: p(['Pasta', 'Riso', 'Farina', 'Zucchero', 'Caffè', 'Tè', 'Olio', 'Aceto', 'Sale', 'Passata', 'Legumi', 'Biscotti']),
   lavastoviglie: p(['Pastiglie', 'Sale', 'Brillantante']),
+  bar: p(['Gin', 'Rum', 'Vodka', 'Vino rosso', 'Vino bianco', 'Prosecco', 'Acqua tonica', 'Amaro']),
   lista: [], // voci aggiunte a mano alla lista della spesa
   mobileBagno: p(['Detersivo lavatrice', 'Ammorbidente', 'Carta igienica', 'Sapone mani', 'Bagnoschiuma', 'Shampoo', 'Dentifricio']),
   armadioPulizie: p(['Detersivo pavimenti', 'Sgrassatore', 'Anticalcare', 'Candeggina', 'Spugne', 'Panni', 'Sacchi spazzatura']),

@@ -2,7 +2,7 @@ import Box from './Box'
 import InStanza from './davanti'
 import Interattivo from './Interattivo'
 import { theme as t } from '../theme'
-import { Frigo, Dispensa, Blocchetto } from './Contenitori'
+import { Frigo, Dispensa, Blocchetto, Bar } from './Contenitori'
 
 // Arredo di sala e cucina (Fase 0). Coordinate di pianta: x, y (altezza), z. Misure in metri.
 
@@ -34,14 +34,7 @@ function Sala() {
         </mesh>
       </Interattivo>
 
-      <Interattivo id="bar" b={[0.06, 0, 3.3, 0.5, 0.75, 3.8]}>
-        <Box b={[0.06, 0, 3.3, 0.48, 0.72, 3.8]} c={t.laccatoBianco} />
-        <Box b={[0.06, 0.72, 3.3, 0.48, 0.75, 3.8]} c={t.rovere} />
-        <Box b={[0.48, 0.05, 3.33, 0.485, 0.68, 3.545]} c="#FFFFFF" />
-        <Box b={[0.48, 0.05, 3.555, 0.485, 0.68, 3.77]} c="#FFFFFF" />
-        <Box b={[0.485, 0.5, 3.51, 0.5, 0.56, 3.535]} c={t.cuoio} />
-        <Box b={[0.485, 0.5, 3.565, 0.5, 0.56, 3.59]} c={t.cuoio} />
-      </Interattivo>
+      <Bar />
 
       {/* tappeto senape con forma grigia */}
       <Box b={[1.15, 0.006, 1.15, 3.0, 0.016, 3.1]} c={t.tappeto} r={1} />

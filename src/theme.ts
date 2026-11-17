@@ -54,6 +54,7 @@ export const theme = {
   colonnaFrigo: '#DCD6CC',
   antaFrigo: '#E3DED5',
   contenuti: ['#E9C46A', '#E07A5F', '#81B29A', '#F2CC8F', '#6D9DC5', '#C9A0DC', '#B5838D', '#9CC5A1'],
+  bottiglie: ['#BFD9E0', '#B5651D', '#E3EEF0', '#7B1E2B', '#E8D98A', '#5E8C4A', '#D7EBE4', '#4A2A1A'],
   blocchetto: '#FFFDF4',
   blocchettoTesta: '#F2D16B',
   inchiostro: '#9AA3AD',

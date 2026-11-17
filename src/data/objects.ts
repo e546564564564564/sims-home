@@ -23,7 +23,7 @@ export const objects: Record<ObjId, Obj> = {
   ...pulizie,
   tv: { id: 'tv', nome: 'TV', stanza: 'sala', sotto: 'Sala · dietro c\'è la caldaia' },
   alexa: { id: 'alexa', nome: 'Alexa', stanza: 'sala', sotto: 'Sala' },
-  bar: { id: 'bar', nome: 'Angolo bar', stanza: 'sala', sotto: 'Sala', },
+  bar: { id: 'bar', nome: 'Angolo bar', stanza: 'sala', sotto: 'Sala · bottiglie e bevande', fronte: [1, 0] },
   termostato: { id: 'termostato', nome: 'Termostato', stanza: 'sala', sotto: 'Sala · riscaldamento e caldaia' },
   citofono: { id: 'citofono', nome: 'Citofono', stanza: 'sala', sotto: 'Sala · ingresso' },
   allarme: { id: 'allarme', nome: 'Allarme', stanza: 'sala', sotto: 'Sala · ingresso' },

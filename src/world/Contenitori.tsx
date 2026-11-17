@@ -125,3 +125,48 @@ export function Blocchetto() {
     </Interattivo>
   )
 }
+
+// Angolo bar: mobile basso con due ante; dentro le bottiglie, piene quanto il livello.
+export function Bar() {
+  const aperta = useNav((s) => s.oggetto === 'bar')
+  const inv = useInventario('bar')
+  const piani = [0.05, 0.4]
+  return (
+    <Interattivo id="bar" b={[0.06, 0, 3.3, 0.5, 0.75, 3.8]}>
+      <Box b={[0.06, 0, 3.3, 0.09, 0.72, 3.8]} c={t.interno} />
+      <Box b={[0.06, 0, 3.3, 0.48, 0.05, 3.8]} c={t.laccatoBianco} />
+      <Box b={[0.06, 0, 3.3, 0.48, 0.72, 3.33]} c={t.laccatoBianco} />
+      <Box b={[0.06, 0, 3.77, 0.48, 0.72, 3.8]} c={t.laccatoBianco} />
+      <Box b={[0.09, 0.38, 3.33, 0.46, 0.4, 3.77]} c={t.ripiano} />
+      <Box b={[0.06, 0.72, 3.3, 0.48, 0.75, 3.8]} c={t.rovere} />
+      {inv.map((p, i) => {
+        const f = quanto[p.livello]
+        if (!f) return null
+        const [x, y, z] = [0.26, piani[Math.floor(i / 4) % 2], 3.39 + (i % 4) * 0.105]
+        const h = 0.2 * f
+        return (
+          <group key={p.id}>
+            <mesh position={[x, y + h / 2, z]} castShadow>
+              <cylinderGeometry args={[0.038, 0.038, h, 14]} />
+              <meshStandardMaterial color={t.bottiglie[i % t.bottiglie.length]} roughness={0.35} />
+            </mesh>
+            {p.livello === 'pieno' && (
+              <mesh position={[x, y + h + 0.035, z]}>
+                <cylinderGeometry args={[0.013, 0.02, 0.07, 10]} />
+                <meshStandardMaterial color={t.bottiglie[i % t.bottiglie.length]} roughness={0.35} />
+              </mesh>
+            )}
+          </group>
+        )
+      })}
+      <Anta x={0.48} z={3.33} angolo={2.9} aperta={aperta}>
+        <Box b={[0, 0.05, 0, 0.006, 0.68, 0.215]} c="#FFFFFF" />
+        <Box b={[0.006, 0.5, 0.18, 0.02, 0.56, 0.205]} c={t.cuoio} />
+      </Anta>
+      <Anta x={0.48} z={3.77} angolo={-2.9} aperta={aperta}>
+        <Box b={[0, 0.05, -0.215, 0.006, 0.68, 0]} c="#FFFFFF" />
+        <Box b={[0.006, 0.5, -0.205, 0.02, 0.56, -0.18]} c={t.cuoio} />
+      </Anta>
+    </Interattivo>
+  )
+}

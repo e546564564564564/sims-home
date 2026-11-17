@@ -29,7 +29,7 @@ export default function CameraRig() {
       const c = objectCenters.get(oggetto)!
       const b = stanza ? roomBounds(stanza) : null
       want.current.set(c.x, c.y * 0.6, c.z)
-      wantZoom.current = b ? fit(Math.max(b.w, b.d, 2.5) * 1.5, true) : 80
+      wantZoom.current = b ? fit(Math.min(Math.max(b.w, b.d, 2.5) * 1.5, 4.5), true) : 80
     } else if (stanza) {
       const b = roomBounds(stanza)
       want.current.set(b.cx, 0, b.cz)
