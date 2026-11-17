@@ -6,6 +6,7 @@ import SalaCucina from './SalaCucina'
 import Stanze from './Stanze'
 import StatoVivo from './StatoVivo'
 import Esterni from './Esterni'
+import Abitanti from './Abitanti'
 import CameraRig from './CameraRig'
 import { gesture } from './camera'
 
@@ -40,6 +41,7 @@ export default function Scene() {
       <Stanze />
       <StatoVivo />
       <Esterni />
+      <Abitanti />
       <CameraRig />
     </Canvas>
   )
