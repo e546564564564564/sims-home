@@ -36,6 +36,17 @@ export const theme = {
   vetroNero: '#26272B',
   nero: '#1E1F23',
   alexa: '#B7BABE',
+  // altre stanze
+  bianco: '#FAFAF8',
+  bambu: '#D8B07A',
+  biancheria: '#C9CBCF',
+  specchio: '#D9E4E8',
+  divanoLetto: '#2F3033',
+  rovereChiaro: '#D9C09A',
+  argento: '#C9CDD2',
+  spiaOk: '#8CCB9B',
+  spiaAttesa: '#F2B84B',
+  postit: '#FFE27A',
   // contenuti di frigo e dispensa
   interno: '#F2F4F2',
   ripiano: '#DDE6E8',

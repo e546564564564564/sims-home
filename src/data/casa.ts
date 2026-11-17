@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import type { ObjId } from './objects'
-import { nomeLivello, type Entita, type Livello, type Prodotto } from './entita'
+import { nomeLivello, type Attivita, type Entita, type Livello, type Prodotto } from './entita'
+import { aggiungi, giorniA, oggi } from './tempo'
 import { entitaIniziali } from './iniziale'
 import { leggiTutte, salvaTutte } from './db'
 
@@ -18,6 +19,9 @@ type Casa = {
   aggiungiVoce: (nome: string) => void
   scadenza: (e: ObjId, p: string, data?: string) => void
   importa: (lista: Entita[]) => void
+  nuovaAttivita: (e: ObjId, a: Omit<Attivita, 'id'>) => void
+  fatto: (e: ObjId, a: string) => void
+  eliminaAttivita: (e: ObjId, a: string) => void
   gruppo: (fn: () => void) => void // più azioni annullabili in un colpo solo
   annulla: () => void
   chiudiAvviso: () => void
@@ -104,6 +108,31 @@ export const useCasa = create<Casa>((set, get) => {
       salva(dopo)
     },
 
+    nuovaAttivita: (e, a) =>
+      modifica(e, `Nuova attività: ${a.nome}`, (ent) => {
+        ent.attivita = [...(ent.attivita ?? []), { ...a, id: 'a' + Date.now() }]
+      }),
+
+    fatto: (e, id) => {
+      const a = get().entita[e].attivita!.find((x) => x.id === id)!
+      modifica(e, `Fatto: ${a.nome}`, (ent) => {
+        const x = ent.attivita!.find((y) => y.id === id)!
+        if (!x.ogni) {
+          ent.attivita = ent.attivita!.filter((y) => y.id !== id) // una volta sola: resta solo nello storico
+          return
+        }
+        x.ultima = Date.now()
+        if (x.tipo === 'completamento') x.prossima = aggiungi(oggi(), x.ogni)
+        else do x.prossima = aggiungi(x.prossima, x.ogni)
+        while (giorniA(x.prossima) <= 0)
+      })
+    },
+
+    eliminaAttivita: (e, id) =>
+      modifica(e, `Tolta l'attività: ${get().entita[e].attivita!.find((x) => x.id === id)!.nome}`, (ent) => {
+        ent.attivita = ent.attivita!.filter((y) => y.id !== id)
+      }),
+
     gruppo: (fn) => {
       const prima = get().entita
       fn()
@@ -120,6 +149,9 @@ export const useCasa = create<Casa>((set, get) => {
     chiudiAvviso: () => set({ avviso: null, prima: null }),
   }
 })
+
+// Attività da fare (oggi o già passate) di un'entità.
+export const daFare = (e?: Entita) => (e?.attivita ?? []).filter((a) => giorniA(a.prossima) <= 0)
 
 // Tutte le voci in lista della spesa, da qualsiasi entità.
 export function vociInLista(m: Mappa) {

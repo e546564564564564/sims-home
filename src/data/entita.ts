@@ -1,5 +1,6 @@
 import type { RoomId } from './house'
 import type { ObjId } from './objects'
+import type { Ogni } from './tempo'
 
 // Modello a entità: ogni oggetto della casa ha la stessa struttura.
 export type Livello = 'pieno' | 'meta' | 'quasi' | 'finito'
@@ -15,8 +16,8 @@ export type Prodotto = {
   scade?: string // AAAA-MM-GG
 }
 
-// Previsti dal modello, usati dai blocchi successivi.
-export type Attivita = { id: string; nome: string; ogniGiorni?: number; tipo: 'completamento' | 'data'; ultima?: number; prossima?: string }
+// Attività: senza "ogni" = una volta sola. tipo: dal giorno in cui la faccio, oppure a data fissa.
+export type Attivita = { id: string; nome: string; ogni?: Ogni; tipo: 'completamento' | 'data'; prossima: string; ultima?: number }
 export type Scadenza = { id: string; nome: string; data: string }
 export type Evento = { quando: number; testo: string }
 

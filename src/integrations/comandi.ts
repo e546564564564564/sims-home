@@ -1,5 +1,6 @@
 import { useCasa } from '../data/casa'
-import type { ObjId } from '../data/objects'
+import { objects, type ObjId } from '../data/objects'
+import { giorniA } from '../data/tempo'
 import type { Prodotto } from '../data/entita'
 
 // Comandi vocali della cucina, con regole semplici (niente servizi esterni).
@@ -37,11 +38,25 @@ function cerca(voce: string, conLista = false): Trovato | null {
   return meglio
 }
 
+// Cerca l'attività che somiglia di più a ciò che è stato detto (nome dell'attività + nome dell'oggetto).
+function cercaAttivita(frase: string) {
+  const w = parole(frase).filter((x) => x.length > 2)
+  let meglio: { e: ObjId; id: string; nome: string; punti: number } | null = null
+  for (const ent of Object.values(useCasa.getState().entita))
+    for (const a of ent.attivita ?? []) {
+      const nomi = new Set([...parole(a.nome), ...parole(objects[ent.id]?.nome ?? '')])
+      const punti = w.filter((x) => nomi.has(x)).length * 2 + (giorniA(a.prossima) <= 0 ? 1 : 0)
+      if (punti >= 2 && (!meglio || punti > meglio.punti)) meglio = { e: ent.id, id: a.id, nome: a.nome, punti }
+    }
+  return meglio
+}
+
 const maiuscola = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
 export function eseguiComando(testo: string): Esito {
   const t = norm(testo)
   const c = useCasa.getState()
+  const prima = c.entita
   const msg: string[] = []
   let oggetto: ObjId | undefined
 
@@ -75,6 +90,14 @@ export function eseguiComando(testo: string): Esito {
   let m: RegExpMatchArray | null
   c.gruppo(() => {
     if ((m = t.match(/(?:ho|abbiamo) (?:comprato|preso) (.+)/))) voci(m[1]).forEach(comprato)
+    else if ((m = t.match(/^(?:ho|abbiamo) (?:gia )?(?:fatto|pulito|lavato|cambiato|sistemato|svuotato|controllato|pagato|sostituito|steso|portato|buttato|tagliato|messo|annaffiato|innaffiato) (.+)/))) {
+      const a = cercaAttivita(m[1])
+      if (a) {
+        c.fatto(a.e, a.id)
+        msg.push(`Fatto: ${a.nome}`)
+        oggetto = a.e
+      } else msg.push('Non trovo questa attività. Puoi crearla con “+ Attività” sull’oggetto.')
+    }
     else if ((m = t.match(/^(?:aggiungi|metti|segna)\w* (?:alla|nella|in) lista(?: della spesa)? (.+)/)) || (m = t.match(/^(?:aggiungi|metti|segna)\w* (.+)/)))
       voci(m[1]).forEach(allaLista)
     else if ((m = t.match(/(?:sta|stanno) finendo (.+)/)) || (m = t.match(/(.+?) (?:sta|stanno) finendo/)) || (m = t.match(/(.+?) (?:e|sono) quasi finit\w/)))
@@ -83,6 +106,6 @@ export function eseguiComando(testo: string): Esito {
       voci(m[1]).forEach((v) => livello(v, 'finito', t.includes('lista')))
   })
   if (!msg.length) return { capito: false, messaggio: `“${testo}”: non ho capito. Prova con “manca il latte” o “ho comprato le uova”.` }
-  return { capito: true, messaggio: msg.join(' · '), oggetto }
+  return { capito: useCasa.getState().entita !== prima, messaggio: msg.join(' · '), oggetto }
 }
 ;(window as unknown as { __voce: typeof eseguiComando }).__voce = eseguiComando // per i test automatici

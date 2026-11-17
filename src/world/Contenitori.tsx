@@ -42,7 +42,7 @@ function Pezzo({ p, i, x, y, z, w, d, h }: { p: Prodotto; i: number; x: number; 
 }
 
 function useInventario(id: ObjId) {
-  return useCasa((s) => s.entita[id]?.inventario ?? [])
+  return useCasa((s) => s.entita[id]?.inventario) ?? []
 }
 
 export function Frigo() {

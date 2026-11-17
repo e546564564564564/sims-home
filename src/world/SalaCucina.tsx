@@ -1,4 +1,5 @@
 import Box from './Box'
+import InStanza from './davanti'
 import Interattivo from './Interattivo'
 import { theme as t } from '../theme'
 import { Frigo, Dispensa, Blocchetto } from './Contenitori'
@@ -177,8 +178,8 @@ function Cucina() {
 export default function SalaCucina() {
   return (
     <>
-      <Sala />
-      <Cucina />
+      <InStanza id="sala"><Sala /></InStanza>
+      <InStanza id="cucina"><Cucina /></InStanza>
     </>
   )
 }

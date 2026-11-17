@@ -3,6 +3,7 @@ import { theme } from '../theme'
 import { useNav } from '../ui/store'
 import House from './House'
 import SalaCucina from './SalaCucina'
+import Stanze from './Stanze'
 import CameraRig from './CameraRig'
 import { gesture } from './camera'
 
@@ -34,6 +35,7 @@ export default function Scene() {
       />
       <House />
       <SalaCucina />
+      <Stanze />
       <CameraRig />
     </Canvas>
   )

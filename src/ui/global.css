@@ -78,3 +78,15 @@ body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; co
 .menu p { margin: 4px 14px 8px; font-size: 13px; color: #A9762B; }
 .fumetto { display: flex; align-items: center; gap: 12px; }
 .fumetto button { flex: none; border: none; background: #4B3F38; color: #FFFBF6; font: 600 14px system-ui, sans-serif; border-radius: 14px; padding: 7px 12px; }
+
+/* attività */
+.piu { align-self: flex-start; border: 2px dashed #E2D6C7; background: none; color: #8A6A1F; font: 600 14px system-ui, sans-serif; border-radius: 16px; padding: 9px 14px; }
+.togli { align-self: flex-start; border: none; background: none; color: #9A8A7E; font: 600 13px system-ui, sans-serif; padding: 6px 2px; text-decoration: underline; }
+.nuova { display: flex; flex-direction: column; gap: 8px; background: #F7F2EB; border-radius: 16px; padding: 12px; }
+.nuova > input { border: 2px solid #E2D6C7; border-radius: 12px; padding: 9px 12px; font: 15px system-ui, sans-serif; background: #fff; color: #4B3F38; }
+.scelta.due { grid-template-columns: 1fr 1fr; }
+.data select, .data input[type=number] { border: 2px solid #E2D6C7; border-radius: 10px; padding: 6px 8px; font: inherit; background: #fff; color: #4B3F38; }
+.data input[type=number] { width: 64px; flex: none; }
+.azioni { display: flex; justify-content: flex-end; gap: 8px; }
+.azioni button:first-child { border: none; background: none; color: #9A8A7E; font: 600 14px system-ui, sans-serif; }
+.storico { display: flex; flex-direction: column; }

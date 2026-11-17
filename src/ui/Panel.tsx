@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNav } from './store'
 import { objects, type ObjId } from '../data/objects'
-import { useCasa, vociInLista } from '../data/casa'
+import { useCasa, vociInLista, daFare } from '../data/casa'
+import BloccoAttivita from './Attivita'
 import { livelli, nomeLivello, type Livello, type Prodotto } from '../data/entita'
 
 const pieni: Record<Livello, number> = { pieno: 4, meta: 2, quasi: 1, finito: 0 }
@@ -94,10 +95,14 @@ export default function Panel() {
   const id = useNav((s) => s.oggetto)
   const chiudi = useNav((s) => s.chiudi)
   const ent = useCasa((s) => (id ? s.entita[id] : undefined))
+  const [tutto, setTutto] = useState(false)
   if (!id) return null
   const o = objects[id]
   const inv = ent?.inventario
-  const finendo = id !== 'lista' && inv?.some((p) => (p.livello === 'finito' || p.livello === 'quasi') && !p.inLista)
+  const finendo = inv?.some((p) => (p.livello === 'finito' || p.livello === 'quasi') && !p.inLista)
+  const conAttivita = id !== 'lista' && id !== 'calendario'
+  const daFareOra = daFare(ent).length > 0
+  const storico = ent?.storico.slice(0, tutto ? 50 : 3) ?? []
   return (
     <aside className="pannello">
       <header>
@@ -107,22 +112,22 @@ export default function Panel() {
         </div>
         <button className="chiudi" onClick={chiudi} aria-label="Chiudi">×</button>
       </header>
-      {inv && id !== 'lista' && <span className={'chip' + (finendo ? ' caldo' : '')}>● {finendo ? 'Qualcosa sta finendo' : 'Tutto a posto'}</span>}
+      {conAttivita && <span className={'chip' + (finendo || daFareOra ? ' caldo' : '')}>● {daFareOra ? "C'è qualcosa da fare" : finendo ? 'Qualcosa sta finendo' : 'Tutto a posto'}</span>}
       {id === 'lista' ? (
         <ListaSpesa />
       ) : inv ? (
         <Inventario e={id} prodotti={inv} />
       ) : id === 'calendario' ? (
         <p className="nota">Qui comparirà il calendario Google condiviso della casa.</p>
-      ) : (
-        <p className="nota">Qui arriveranno attività e storico di questo oggetto.</p>
-      )}
-      {ent && ent.storico.length > 0 && (
+      ) : null}
+      {conAttivita && <BloccoAttivita e={id} />}
+      {storico.length > 0 && (
         <div className="storico">
-          <h3>Ultime modifiche</h3>
-          {ent.storico.slice(0, 3).map((s, i) => (
+          <h3>Storico</h3>
+          {storico.map((s, i) => (
             <p key={i}>{s.testo} <span>· {new Date(s.quando).toLocaleDateString('it-IT', { day: 'numeric', month: 'short' })}</span></p>
           ))}
+          {ent!.storico.length > 3 && <button className="togli" onClick={() => setTutto(!tutto)}>{tutto ? 'Mostra meno' : 'Mostra tutto lo storico'}</button>}
         </div>
       )}
     </aside>
