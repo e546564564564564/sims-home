@@ -9,7 +9,7 @@ export type ObjId =
   | `pulizia-${StanzaPulizia}`
   | 'tv' | 'alexa' | 'bar' | 'termostato' | 'citofono' | 'allarme' | 'calendario'
   | 'frigo' | 'dispensa' | 'forno' | 'lavastoviglie' | 'bidoni' | 'lista'
-  | 'posta' | 'lavatrice' | 'mobileBagno' | 'letto' | 'armadio' | 'computer' | 'asciugatrice' | 'robot' | 'armadioPulizie'
+  | 'posta' | 'prato' | 'siepe' | 'piante' | 'lavatrice' | 'mobileBagno' | 'letto' | 'armadio' | 'computer' | 'asciugatrice' | 'robot' | 'armadioPulizie'
 
 // fronte: verso dove guarda l'apertura (x, z); la camera ruota per vederla quando l'oggetto si apre.
 export type Obj = { id: ObjId; nome: string; stanza: RoomId; sotto: string; fronte?: [number, number] }
@@ -33,6 +33,9 @@ export const objects: Record<ObjId, Obj> = {
   forno: { id: 'forno', nome: 'Forno e piano cottura', stanza: 'cucina', sotto: 'Cucina' },
   lavastoviglie: { id: 'lavastoviglie', nome: 'Lavastoviglie', stanza: 'cucina', sotto: 'Cucina · sotto il lavello' },
   bidoni: { id: 'bidoni', nome: 'Raccolta differenziata', stanza: 'cucina', sotto: 'Cucina · sotto il lavello' },
+  prato: { id: 'prato', nome: 'Prato', stanza: 'giardino', sotto: 'Giardino · si apre toccando l\'erba' },
+  siepe: { id: 'siepe', nome: 'Siepe', stanza: 'giardino', sotto: 'Giardino' },
+  piante: { id: 'piante', nome: 'Aiuola', stanza: 'giardino', sotto: 'Giardino · piante' },
   posta: { id: 'posta', nome: 'Cassetta della posta', stanza: 'portico', sotto: 'Portico · bollette, rinnovi, appuntamenti' },
   lavatrice: { id: 'lavatrice', nome: 'Lavatrice', stanza: 'bagno', sotto: 'Bagno', fronte: [1, 0] },
   mobileBagno: { id: 'mobileBagno', nome: 'Mobile del lavabo', stanza: 'bagno', sotto: 'Bagno · scorte del bagno e del bucato', fronte: [1, 0] },
@@ -58,6 +61,9 @@ export const suggerimenti: Partial<Record<ObjId, string[]>> = {
   lavastoviglie: ['Pulire il filtro', 'Lavaggio a vuoto'],
   termostato: ['Manutenzione caldaia'],
   bidoni: ['Lavare i bidoni'],
+  prato: ['Tagliare il prato', 'Concimare il prato', 'Pulire il giardino'],
+  siepe: ['Potare la siepe'],
+  piante: ['Annaffiare le piante', 'Concimare le piante'],
   posta: ['Bolletta luce', 'Bolletta gas', 'Bolletta acqua', 'Rinnovo assicurazione', 'Bollo auto', 'Revisione auto', 'Appuntamento'],
 }
 

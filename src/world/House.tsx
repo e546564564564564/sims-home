@@ -36,6 +36,7 @@ function Floors() {
     const { stanza, oggetto, apri } = useNav.getState()
     if (oggetto && stanza === id) chiudi()
     else if (stanza === id && (stanzePulizia as readonly string[]).includes(id)) apri(`pulizia-${id as StanzaPulizia}`, id)
+    else if (stanza === id && id === 'giardino') apri('prato', id)
     else vaiStanza(id)
   }
   return (
