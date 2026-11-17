@@ -1,6 +1,7 @@
 import Box from './Box'
 import Interattivo from './Interattivo'
 import { theme as t } from '../theme'
+import { Frigo, Dispensa, Blocchetto } from './Contenitori'
 
 // Arredo di sala e cucina (Fase 0). Coordinate di pianta: x, y (altezza), z. Misure in metri.
 
@@ -127,12 +128,7 @@ function Cucina() {
       <Box b={[4.65, 0.92, back, 7.88, 1.45, back + 0.005]} c={t.rivestimento} />
       <Box b={[4.65, 1.43, back - 0.3, 7.3, 1.45, back]} c="#FFF3D0" r={0.2} />
 
-      <Interattivo id="dispensa" b={[4.65, 1.45, 4.12, 7.3, 2.1, back]}>
-        <Box b={[4.65, 1.45, 4.12, 7.3, 2.1, back]} c={t.cucinaPensili} />
-        {[4.67, 5.33, 5.99, 6.65].map((x) => (
-          <Box key={x} b={[x, 1.48, 4.115, x + 0.62, 2.07, 4.12]} c="#C6BEB1" />
-        ))}
-      </Interattivo>
+      <Dispensa />
 
       {/* lavello sopra lavastoviglie e bidoni */}
       <Box b={[4.65, 0.88, front, 5.45, 0.92, back]} c={t.piano} />
@@ -172,12 +168,8 @@ function Cucina() {
       {/* braccio della L: base d'angolo e colonna frigo */}
       <Box b={[7.3, 0, 3.4, 7.88, 0.88, back]} c={t.cucinaBasi} />
       <Box b={[7.3, 0.88, 3.4, 7.88, 0.92, 3.92]} c={t.piano} />
-      <Interattivo id="frigo" b={[7.3, 0, 2.85, 7.88, 2.1, 3.4]}>
-        <Box b={[7.3, 0, 2.85, 7.88, 2.1, 3.4]} c="#DCD6CC" />
-        <Box b={[7.295, 0.05, 2.88, 7.3, 0.95, 3.37]} c="#E3DED5" />
-        <Box b={[7.295, 1.0, 2.88, 7.3, 2.05, 3.37]} c="#E3DED5" />
-        <Box b={[7.28, 0.98, 2.93, 7.295, 1.0, 3.15]} c="#B9B1A4" />
-      </Interattivo>
+      <Frigo />
+      <Blocchetto />
     </group>
   )
 }

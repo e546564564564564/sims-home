@@ -36,6 +36,16 @@ export const theme = {
   vetroNero: '#26272B',
   nero: '#1E1F23',
   alexa: '#B7BABE',
+  // contenuti di frigo e dispensa
+  interno: '#F2F4F2',
+  ripiano: '#DDE6E8',
+  anta: '#C6BEB1',
+  colonnaFrigo: '#DCD6CC',
+  antaFrigo: '#E3DED5',
+  contenuti: ['#E9C46A', '#E07A5F', '#81B29A', '#F2CC8F', '#6D9DC5', '#C9A0DC', '#B5838D', '#9CC5A1'],
+  blocchetto: '#FFFDF4',
+  blocchettoTesta: '#F2D16B',
+  inchiostro: '#9AA3AD',
   // interfaccia
   testo: '#4B3F38',
   testoTenue: '#9A8A7E',
