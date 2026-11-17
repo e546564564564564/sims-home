@@ -55,3 +55,4 @@ Vite + React + TypeScript, React Three Fiber + drei, Zustand, idb, vite-plugin-p
 
 ## Stato
 - Blocco 0 fatto: Vite + React + R3F, scena di prova (cubo), PWA landscape installabile, deploy GitHub Pages via Actions, prova microfono (Web Speech it-IT).
+- Blocchi 1–2 fatti: theme.ts con palette, house.ts con stanze/muri/aperture, guscio completo generato, muri abbassati (regola isolata in src/world/walls.ts), camera isometrica (trascina, pinch, due dita ruota a 90°, tasto ↻), selettore stanza, tap stanza/oggetto, arredo sala e cucina, 12 oggetti interattivi con alone, pannello a destra con contenuti d'anteprima. Vista di default dall'angolo della scala (nord-est), fedele alla pianta.

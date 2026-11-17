@@ -1,0 +1,30 @@
+import { useState } from 'react'
+import { useNav } from './store'
+import { rooms } from '../data/house'
+
+// Scorciatoia in alto a sinistra: salta a una stanza o torna a tutta la casa. Più un tasto per ruotare.
+export default function RoomPicker() {
+  const stanza = useNav((s) => s.stanza)
+  const vai = useNav((s) => s.vaiStanza)
+  const ruota = useNav((s) => s.ruota)
+  const [aperto, setAperto] = useState(false)
+  const nome = stanza ? rooms.find((r) => r.id === stanza)!.nome : 'Tutta la casa'
+  return (
+    <div className="picker">
+      <div className="picker-riga">
+        <button className="picker-btn" onClick={() => setAperto(!aperto)}>
+          {nome} <span className="freccia">▾</span>
+        </button>
+        <button className="tondo" onClick={() => ruota(1)} aria-label="Ruota la casa">↻</button>
+      </div>
+      {aperto && (
+        <ul className="picker-lista">
+          <li><button onClick={() => { vai(null); setAperto(false) }}>Tutta la casa</button></li>
+          {rooms.map((r) => (
+            <li key={r.id}><button onClick={() => { vai(r.id); setAperto(false) }}>{r.nome}</button></li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}

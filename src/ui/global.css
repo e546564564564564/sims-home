@@ -12,3 +12,32 @@ body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; co
   .ruota { display: grid; place-items: center; position: fixed; inset: 0; background: #F3EADF; z-index: 100; text-align: center; font-size: 18px; font-weight: 600; padding: 24px; }
   .ruota-icona { font-size: 56px; margin-bottom: 12px; color: #C9A133; }
 }
+
+/* selettore stanza */
+.picker { position: fixed; left: max(16px, env(safe-area-inset-left)); top: 14px; z-index: 10; }
+.picker-riga { display: flex; gap: 8px; }
+.picker-btn, .tondo { border: none; background: rgba(255,251,246,.94); color: #4B3F38; font: 600 15px system-ui, sans-serif; height: 42px; border-radius: 21px; padding: 0 18px; box-shadow: 0 3px 10px rgba(90,60,30,.12); }
+.tondo { width: 42px; padding: 0; font-size: 20px; }
+.freccia { color: #B3A497; margin-left: 6px; }
+.picker-lista { list-style: none; margin: 8px 0 0; padding: 6px; background: #FFFBF6; border-radius: 16px; box-shadow: 0 6px 18px rgba(90,60,30,.18); max-height: 70vh; overflow: auto; }
+.picker-lista button { width: 100%; text-align: left; border: none; background: none; padding: 10px 14px; font: 500 15px system-ui, sans-serif; color: #4B3F38; border-radius: 10px; }
+.picker-lista button:active { background: #F3EBE2; }
+
+/* pannello contestuale */
+.pannello { position: fixed; top: 10px; right: max(10px, env(safe-area-inset-right)); bottom: 10px; width: 34vw; min-width: 280px; background: #FFFBF6; border-radius: 24px; padding: 18px 18px 14px; box-shadow: 0 8px 28px rgba(90,60,30,.18); z-index: 20; display: flex; flex-direction: column; gap: 12px; overflow: auto; animation: entra .22s ease-out; }
+@keyframes entra { from { transform: translateX(24px); opacity: 0; } }
+.pannello header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.pannello h2 { margin: 0; font-size: 22px; }
+.sotto { margin: 2px 0 0; color: #9A8A7E; font-size: 14px; }
+.chiudi { border: none; background: #F3EBE2; color: #9A8A7E; width: 36px; height: 36px; border-radius: 50%; font-size: 22px; line-height: 1; flex: none; }
+.chip { align-self: flex-start; background: #E3F1E8; color: #4F8A66; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 14px; }
+.righe { display: flex; flex-direction: column; gap: 8px; }
+.riga { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 8px; background: #F7F2EB; border-radius: 16px; padding: 10px 12px; }
+.riga strong { font-size: 16px; }
+.tacche { display: flex; gap: 3px; margin-top: 5px; }
+.tacche i { width: 12px; height: 6px; border-radius: 3px; background: #E4DCD0; }
+.tacche i.piena { background: #C9A133; }
+.livello { font-size: 12.5px; font-weight: 600; padding: 5px 10px; border-radius: 12px; }
+.lista { border: 2px solid #E2D6C7; background: #fff; color: #6B5D52; font: 600 13px system-ui, sans-serif; border-radius: 16px; padding: 6px 10px; }
+.nota { margin: 0; color: #6B5D52; font-size: 15px; line-height: 1.4; }
+.piede { margin-top: auto; color: #B3A497; font-size: 12.5px; text-align: center; }
