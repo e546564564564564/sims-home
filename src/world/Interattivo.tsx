@@ -15,7 +15,7 @@ type Bounds = [number, number, number, number, number, number] // x0,y0,z0,x1,y1
 // Oggetto toccabile: area di tocco più grande della geometria + alone caldo quando è selezionato.
 // parete: se l'oggetto è appeso a un muro, si nasconde quando quel muro è abbassato.
 // Segnale gentile: un post-it sopra l'oggetto quando c'è un'attività da fare (tranne chi ha un segnale suo).
-const segnaleProprio = new Set<ObjId>(['lavatrice'])
+const segnaleProprio = new Set<ObjId>(['lavatrice', 'posta'])
 
 // taglia: invece di sparire col muro basso, il mobile alto si abbassa come il muro.
 export default function Interattivo({ id, b, children, parete, taglia }: { id: ObjId; b: Bounds; children: ReactNode; parete?: { x: number; z: number; asseX: boolean }; taglia?: boolean }) {

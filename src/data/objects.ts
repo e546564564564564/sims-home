@@ -9,7 +9,7 @@ export type ObjId =
   | `pulizia-${StanzaPulizia}`
   | 'tv' | 'alexa' | 'bar' | 'termostato' | 'citofono' | 'allarme' | 'calendario'
   | 'frigo' | 'dispensa' | 'forno' | 'lavastoviglie' | 'bidoni' | 'lista'
-  | 'lavatrice' | 'mobileBagno' | 'letto' | 'armadio' | 'computer' | 'asciugatrice' | 'robot' | 'armadioPulizie'
+  | 'posta' | 'lavatrice' | 'mobileBagno' | 'letto' | 'armadio' | 'computer' | 'asciugatrice' | 'robot' | 'armadioPulizie'
 
 // fronte: verso dove guarda l'apertura (x, z); la camera ruota per vederla quando l'oggetto si apre.
 export type Obj = { id: ObjId; nome: string; stanza: RoomId; sotto: string; fronte?: [number, number] }
@@ -33,6 +33,7 @@ export const objects: Record<ObjId, Obj> = {
   forno: { id: 'forno', nome: 'Forno e piano cottura', stanza: 'cucina', sotto: 'Cucina' },
   lavastoviglie: { id: 'lavastoviglie', nome: 'Lavastoviglie', stanza: 'cucina', sotto: 'Cucina · sotto il lavello' },
   bidoni: { id: 'bidoni', nome: 'Raccolta differenziata', stanza: 'cucina', sotto: 'Cucina · sotto il lavello' },
+  posta: { id: 'posta', nome: 'Cassetta della posta', stanza: 'portico', sotto: 'Portico · bollette, rinnovi, appuntamenti' },
   lavatrice: { id: 'lavatrice', nome: 'Lavatrice', stanza: 'bagno', sotto: 'Bagno', fronte: [1, 0] },
   mobileBagno: { id: 'mobileBagno', nome: 'Mobile del lavabo', stanza: 'bagno', sotto: 'Bagno · scorte del bagno e del bucato', fronte: [1, 0] },
   letto: { id: 'letto', nome: 'Letto', stanza: 'camera', sotto: 'Camera · lenzuola' },
@@ -57,6 +58,7 @@ export const suggerimenti: Partial<Record<ObjId, string[]>> = {
   lavastoviglie: ['Pulire il filtro', 'Lavaggio a vuoto'],
   termostato: ['Manutenzione caldaia'],
   bidoni: ['Lavare i bidoni'],
+  posta: ['Bolletta luce', 'Bolletta gas', 'Bolletta acqua', 'Rinnovo assicurazione', 'Bollo auto', 'Revisione auto', 'Appuntamento'],
 }
 
 // Tipi di rifiuto della raccolta differenziata, con il colore del bidone.

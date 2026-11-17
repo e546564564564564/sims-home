@@ -1,5 +1,7 @@
 import Box from './Box'
+import Interattivo from './Interattivo'
 import { useCasa, bidoniFuori } from '../data/casa'
+import { giorniA } from '../data/tempo'
 import { rifiuti } from '../data/objects'
 
 // Fuori dalla porta d'ingresso, sul portico: i bidoni da esporre (segnale gentile della raccolta).
@@ -23,6 +25,26 @@ function BidoniFuori() {
   )
 }
 
+// Cassetta della posta sul portico: le scadenze generiche. Una lettera spunta quando una scadenza è vicina (3 giorni).
+function Posta() {
+  const lettera = useCasa((s) => (s.entita.posta?.attivita ?? []).some((a) => giorniA(a.prossima) <= 3))
+  return (
+    <Interattivo id="posta" b={[5.72, 0, -2.8, 6.14, 1.4, -2.54]}>
+      <Box b={[5.9, 0, -2.7, 5.96, 1.0, -2.64]} c="#3A3A3D" />
+      <Box b={[5.75, 1.0, -2.78, 6.11, 1.3, -2.56]} c="#5E7D6A" r={0.5} />
+      <Box b={[5.74, 1.3, -2.79, 6.12, 1.33, -2.55]} c="#4F6B5A" r={0.5} />
+      <Box b={[5.82, 1.2, -2.785, 6.04, 1.22, -2.78]} c="#2E3B33" />
+      {lettera && <Box b={[5.83, 1.2, -2.86, 6.03, 1.21, -2.74]} c="#FFFDF4" r={1} />}
+      {lettera && <Box b={[5.85, 1.19, -2.9, 6.01, 1.25, -2.85]} c="#FFFDF4" r={1} />}
+    </Interattivo>
+  )
+}
+
 export default function Esterni() {
-  return <BidoniFuori />
+  return (
+    <>
+      <BidoniFuori />
+      <Posta />
+    </>
+  )
 }
