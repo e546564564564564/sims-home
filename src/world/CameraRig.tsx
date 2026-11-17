@@ -7,7 +7,8 @@ import { E, azimuth, objectCenters, gesture } from './camera'
 
 const PANEL = 0.34 // quota di schermo occupata dal pannello
 
-// Camera isometrica: segue stanza/oggetto scelti; gesti: un dito sposta, pinch zoom, due dita ruotano a scatti di 90°.
+// Camera isometrica: segue stanza/oggetto scelti; gesti: un dito sposta, pinch zoom,
+// due dita ruotano la scena seguendo le dita (come su tablet); al rilascio si assesta sul quarto di giro più vicino.
 export default function CameraRig() {
   const { camera, gl, size } = useThree()
   const cam = camera as OrthographicCamera
@@ -20,6 +21,7 @@ export default function CameraRig() {
   const zoom = useRef(40)
   const wantZoom = useRef(40)
   const az = useRef(azimuth(0))
+  const torsione = useRef(0) // rotazione libera mentre si ruota con due dita
 
   const fit = (dim: number, panel: boolean) => Math.min(size.width * (panel ? 1 - PANEL : 1), size.height * 1.4) / (dim * 1.35)
 
@@ -50,7 +52,7 @@ export default function CameraRig() {
     const pts = new Map<number, { x: number; y: number }>()
     let last = { dist: 0, ang: 0, cx: 0, cy: 0 }
     let accRot = 0
-    let rotDone = false
+    let ruotando = false
     const pair = () => {
       const [a, b] = [...pts.values()]
       return { dist: Math.hypot(b.x - a.x, b.y - a.y), ang: Math.atan2(b.y - a.y, b.x - a.x), cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2 }
@@ -66,7 +68,7 @@ export default function CameraRig() {
     const down = (e: PointerEvent) => {
       pts.set(e.pointerId, { x: e.clientX, y: e.clientY })
       if (pts.size === 1) gesture.moved = 0
-      if (pts.size === 2) { last = pair(); accRot = 0; rotDone = false }
+      if (pts.size === 2) { last = pair(); accRot = 0; ruotando = false }
     }
     const move = (e: PointerEvent) => {
       const p = pts.get(e.pointerId)
@@ -83,11 +85,23 @@ export default function CameraRig() {
         if (d > Math.PI) d -= 2 * Math.PI
         if (d < -Math.PI) d += 2 * Math.PI
         accRot += d
-        if (!rotDone && Math.abs(accRot) > 0.6) { useNav.getState().ruota(accRot > 0 ? -1 : 1); rotDone = true }
+        if (!ruotando && Math.abs(accRot) > 0.12) ruotando = true // piccola soglia: un pinch non ruota per sbaglio
+        if (ruotando) torsione.current = -accRot
         last = now
       }
     }
-    const up = (e: PointerEvent) => { pts.delete(e.pointerId) }
+    const up = (e: PointerEvent) => {
+      const eraDue = pts.size === 2
+      pts.delete(e.pointerId)
+      if (eraDue && torsione.current) {
+        // assesta sul quarto di giro più vicino (la regola dei muri lavora a quarti)
+        const { rotazione } = useNav.getState()
+        const passi = Math.round(torsione.current / (Math.PI / 2))
+        torsione.current = 0
+        accRot = 0
+        if (passi) useNav.setState({ rotazione: (((rotazione + passi) % 4) + 4) % 4 })
+      }
+    }
     const wheel = (e: WheelEvent) => { zoom.current = wantZoom.current = Math.min(320, Math.max(18, zoom.current * (e.deltaY > 0 ? 0.9 : 1.1))) }
     el.addEventListener('pointerdown', down)
     window.addEventListener('pointermove', move)
@@ -107,10 +121,11 @@ export default function CameraRig() {
     const k = 1 - Math.exp(-dt * 6)
     target.current.lerp(want.current, k)
     zoom.current += (wantZoom.current - zoom.current) * k
-    let d = azimuth(rot) - az.current
+    const voluto = azimuth(useNav.getState().rotazione) + torsione.current
+    let d = voluto - az.current
     while (d > Math.PI) d -= 2 * Math.PI
     while (d < -Math.PI) d += 2 * Math.PI
-    az.current += d * k
+    az.current += torsione.current ? d : d * k // durante il gesto segue le dita
     const a = az.current
     const t = target.current
     cam.position.set(t.x + Math.sin(a) * Math.cos(E) * 30, Math.sin(E) * 30, t.z - Math.cos(a) * Math.cos(E) * 30)

@@ -4,11 +4,10 @@ import { rooms } from '../data/house'
 import Impostazioni from './Impostazioni'
 import { stanzePulizia, type StanzaPulizia } from '../data/objects'
 
-// Scorciatoia in alto a sinistra: salta a una stanza o torna a tutta la casa. Più un tasto per ruotare.
+// Scorciatoia in alto a sinistra: salta a una stanza o torna a tutta la casa.
 export default function RoomPicker() {
   const stanza = useNav((s) => s.stanza)
   const vai = useNav((s) => s.vaiStanza)
-  const ruota = useNav((s) => s.ruota)
   const [aperto, setAperto] = useState(false)
   const nome = stanza ? rooms.find((r) => r.id === stanza)!.nome : 'Tutta la casa'
   return (
@@ -17,7 +16,6 @@ export default function RoomPicker() {
         <button className="picker-btn" onClick={() => setAperto(!aperto)}>
           {nome} <span className="freccia">▾</span>
         </button>
-        <button className="tondo" onClick={() => ruota(1)} aria-label="Ruota la casa">↻</button>
         {stanza && (stanzePulizia as readonly string[]).includes(stanza) && (
           <button className="tondo" onClick={() => useNav.getState().apri(`pulizia-${stanza as StanzaPulizia}`, stanza)} aria-label="Pulizie della stanza">🧹</button>
         )}

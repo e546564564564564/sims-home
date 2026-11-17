@@ -35,7 +35,7 @@ Vite + React + TypeScript, React Three Fiber + drei, Zustand, idb, vite-plugin-p
 
 ## Interazione
 - Avvio: tutta la casa dall'alto. Tap stanza → zoom, muri davanti abbassati (impostazione isolata). Tap oggetto → alone + pannello a destra (1/3 schermo). Tap vuoto → chiude / torna indietro.
-- Pinch zoom, trascinamento, rotazione a scatti di 90°. Aree di tocco più grandi della geometria.
+- Pinch zoom, trascinamento, rotazione con due dita che segue le dita (al rilascio si assesta a 90°). Aree di tocco più grandi della geometria.
 - Azioni rapide immediate con "Annulla" per qualche secondo; niente conferme.
 
 ## Dati
@@ -55,7 +55,7 @@ Vite + React + TypeScript, React Three Fiber + drei, Zustand, idb, vite-plugin-p
 
 ## Stato
 - Blocco 0 fatto: Vite + React + R3F, scena di prova (cubo), PWA landscape installabile, deploy GitHub Pages via Actions, prova microfono (Web Speech it-IT).
-- Blocchi 1–2 fatti: theme.ts con palette, house.ts con stanze/muri/aperture, guscio completo generato, muri abbassati (regola isolata in src/world/walls.ts), camera isometrica (trascina, pinch, due dita ruota a 90°, tasto ↻), selettore stanza, tap stanza/oggetto, arredo sala e cucina, 12 oggetti interattivi con alone, pannello a destra con contenuti d'anteprima. Vista di default dall'angolo della scala (nord-est), fedele alla pianta.
+- Blocchi 1–2 fatti: theme.ts con palette, house.ts con stanze/muri/aperture, guscio completo generato, muri abbassati (regola isolata in src/world/walls.ts), camera isometrica (trascina, pinch, due dita ruotano liberamente come su tablet e al rilascio si assesta sul quarto di giro più vicino; tasto ↻ tolto), selettore stanza, tap stanza/oggetto, arredo sala e cucina, 12 oggetti interattivi con alone, pannello a destra con contenuti d'anteprima. Vista di default dall'angolo della scala (nord-est), fedele alla pianta.
 - Blocchi 3–4 fatti: entità (src/data/entita.ts, seme in iniziale.ts) salvate in IndexedDB (db.ts, store casa.ts con storico e "Annulla"), backup esporta/importa dal menu ⋯; cucina: frigo/congelatore, dispensa e lavastoviglie a livelli, "+ Lista", blocchetto lista sul fianco del frigo (righe scritte = voci), "Comprato" → pieno, voci libere, scadenze alimenti; frigo e dispensa si aprono e mostrano i prodotti alti quanto il livello, la camera ruota per vederne il fronte.
 - Blocco 4b fatto: comandi vocali cucina in src/integrations/comandi.ts ("manca/è finito X", "X sta finendo", "aggiungi X alla lista", "manca X, aggiungilo alla lista", "ho comprato X e Y"), fumetto con Annulla (azione store `gruppo`), poi si apre il pannello che mostra il risultato. Prodotto sconosciuto → voce libera in lista.
 - Blocco 5 fatto: arredo bagno/camera/studio/ripostiglio (src/world/Stanze.tsx) con lavatrice, mobile lavabo, letto, armadio, computer, asciugatrice, robot, armadio pulizie; "+ Attività" su ogni oggetto (una volta / si ripete ogni N giorni-settimane-mesi, dal completamento o a data fissa), "Fatto" con Annulla, storico completo, post-it sopra gli oggetti con attività da fare (spia ambra sulla lavatrice), voce "ho fatto/pulito/cambiato X". Arredo delle stanze davanti nascosto quando si guarda una stanza (src/world/davanti.tsx); armadi alti sui muri bassi si abbassano (prop taglia).
