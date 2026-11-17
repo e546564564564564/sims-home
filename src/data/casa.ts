@@ -18,6 +18,7 @@ type Casa = {
   aggiungiVoce: (nome: string) => void
   scadenza: (e: ObjId, p: string, data?: string) => void
   importa: (lista: Entita[]) => void
+  gruppo: (fn: () => void) => void // più azioni annullabili in un colpo solo
   annulla: () => void
   chiudiAvviso: () => void
 }
@@ -101,6 +102,12 @@ export const useCasa = create<Casa>((set, get) => {
       const dopo = { ...mappa(entitaIniziali()), ...mappa(lista) }
       set({ entita: dopo, prima, avviso: { testo: 'Backup caricato', n: (get().avviso?.n ?? 0) + 1 } })
       salva(dopo)
+    },
+
+    gruppo: (fn) => {
+      const prima = get().entita
+      fn()
+      if (get().entita !== prima) set({ prima, avviso: null })
     },
 
     annulla: () => {

@@ -76,3 +76,5 @@ body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; co
 .menu { position: absolute; top: 50px; left: 0; min-width: 220px; margin-top: 0; padding: 6px; background: #FFFBF6; border-radius: 16px; box-shadow: 0 6px 18px rgba(90,60,30,.18); display: flex; flex-direction: column; }
 .menu button { border: none; background: none; text-align: left; padding: 12px 14px; font: 500 15px system-ui, sans-serif; color: #4B3F38; border-radius: 10px; }
 .menu p { margin: 4px 14px 8px; font-size: 13px; color: #A9762B; }
+.fumetto { display: flex; align-items: center; gap: 12px; }
+.fumetto button { flex: none; border: none; background: #4B3F38; color: #FFFBF6; font: 600 14px system-ui, sans-serif; border-radius: 14px; padding: 7px 12px; }
