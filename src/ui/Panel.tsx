@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNav } from './store'
 import { objects, type ObjId } from '../data/objects'
-import { useCasa, vociInLista, daFare } from '../data/casa'
+import { useCasa, vociInLista, daFare, grado } from '../data/casa'
 import BloccoAttivita from './Attivita'
 import Calendario from './Calendario'
 import { livelli, nomeLivello, type Livello, type Prodotto } from '../data/entita'
@@ -113,7 +113,9 @@ export default function Panel() {
         </div>
         <button className="chiudi" onClick={chiudi} aria-label="Chiudi">×</button>
       </header>
-      {conAttivita && <span className={'chip' + (finendo || daFareOra ? ' caldo' : '')}>● {daFareOra ? "C'è qualcosa da fare" : finendo ? 'Qualcosa sta finendo' : 'Tutto a posto'}</span>}
+      {id.startsWith('pulizia-') ? (
+        <span className={'chip' + (grado(ent) ? ' caldo' : '')}>● {['In ordine', 'Un po’ vissuta', 'Da sistemare'][grado(ent)]}</span>
+      ) : conAttivita && <span className={'chip' + (finendo || daFareOra ? ' caldo' : '')}>● {daFareOra ? "C'è qualcosa da fare" : finendo ? 'Qualcosa sta finendo' : 'Tutto a posto'}</span>}
       {id === 'lista' ? (
         <ListaSpesa />
       ) : inv ? (

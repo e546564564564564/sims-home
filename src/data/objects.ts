@@ -1,7 +1,12 @@
 import type { RoomId } from './house'
 
 // Catalogo degli oggetti interattivi (nome e posto). I dati di ciascuno sono nell'entità con lo stesso id (casa.ts).
+// Stanze con la pulizia periodica: ognuna ha un'entità "pulizia-<stanza>" (si apre toccando il pavimento della stanza).
+export const stanzePulizia = ['sala', 'cucina', 'bagno', 'camera', 'studio', 'corridoio', 'ripostiglio'] as const
+export type StanzaPulizia = (typeof stanzePulizia)[number]
+
 export type ObjId =
+  | `pulizia-${StanzaPulizia}`
   | 'tv' | 'alexa' | 'bar' | 'termostato' | 'citofono' | 'allarme' | 'calendario'
   | 'frigo' | 'dispensa' | 'forno' | 'lavastoviglie' | 'bidoni' | 'lista'
   | 'lavatrice' | 'mobileBagno' | 'letto' | 'armadio' | 'computer' | 'asciugatrice' | 'robot' | 'armadioPulizie'
@@ -9,7 +14,13 @@ export type ObjId =
 // fronte: verso dove guarda l'apertura (x, z); la camera ruota per vederla quando l'oggetto si apre.
 export type Obj = { id: ObjId; nome: string; stanza: RoomId; sotto: string; fronte?: [number, number] }
 
+const nomiStanze: Record<StanzaPulizia, string> = { sala: 'Sala', cucina: 'Cucina', bagno: 'Bagno', camera: 'Camera', studio: 'Studio', corridoio: 'Corridoio', ripostiglio: 'Ripostiglio' }
+const pulizie = Object.fromEntries(
+  stanzePulizia.map((r) => [`pulizia-${r}`, { id: `pulizia-${r}`, nome: nomiStanze[r], stanza: r, sotto: 'Pulizia della stanza' }]),
+) as Record<`pulizia-${StanzaPulizia}`, Obj>
+
 export const objects: Record<ObjId, Obj> = {
+  ...pulizie,
   tv: { id: 'tv', nome: 'TV', stanza: 'sala', sotto: 'Sala · dietro c\'è la caldaia' },
   alexa: { id: 'alexa', nome: 'Alexa', stanza: 'sala', sotto: 'Sala' },
   bar: { id: 'bar', nome: 'Angolo bar', stanza: 'sala', sotto: 'Sala', },

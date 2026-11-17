@@ -4,6 +4,7 @@ import type { ThreeEvent } from '@react-three/fiber'
 import { rooms, T, type RoomId } from '../data/house'
 import { theme } from '../theme'
 import { useNav } from '../ui/store'
+import { stanzePulizia, type StanzaPulizia } from '../data/objects'
 import { buildPieces, type Piece } from './walls'
 import { camDir, azimuth } from './camera'
 
@@ -32,8 +33,9 @@ function Floors() {
   const click = (id: RoomId) => (e: ThreeEvent<MouseEvent>) => {
     if (e.delta > 10) return
     e.stopPropagation()
-    const { stanza, oggetto } = useNav.getState()
+    const { stanza, oggetto, apri } = useNav.getState()
     if (oggetto && stanza === id) chiudi()
+    else if (stanza === id && (stanzePulizia as readonly string[]).includes(id)) apri(`pulizia-${id as StanzaPulizia}`, id)
     else vaiStanza(id)
   }
   return (

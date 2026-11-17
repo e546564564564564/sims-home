@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNav } from './store'
 import { rooms } from '../data/house'
 import Impostazioni from './Impostazioni'
+import { stanzePulizia, type StanzaPulizia } from '../data/objects'
 
 // Scorciatoia in alto a sinistra: salta a una stanza o torna a tutta la casa. Più un tasto per ruotare.
 export default function RoomPicker() {
@@ -17,6 +18,9 @@ export default function RoomPicker() {
           {nome} <span className="freccia">▾</span>
         </button>
         <button className="tondo" onClick={() => ruota(1)} aria-label="Ruota la casa">↻</button>
+        {stanza && (stanzePulizia as readonly string[]).includes(stanza) && (
+          <button className="tondo" onClick={() => useNav.getState().apri(`pulizia-${stanza as StanzaPulizia}`, stanza)} aria-label="Pulizie della stanza">🧹</button>
+        )}
         <Impostazioni />
       </div>
       {aperto && (

@@ -26,8 +26,9 @@ function voci(s: string) {
 // Cerca il prodotto: tutte le parole del nome devono esserci; vince il nome più lungo.
 function cerca(voce: string, conLista = false): Trovato | null {
   const ent = useCasa.getState().entita
-  const ordine: ObjId[] = voce.includes('lavastoviglie') ? ['lavastoviglie', 'frigo', 'dispensa'] : ['frigo', 'dispensa', 'lavastoviglie']
-  if (conLista) ordine.unshift('lista')
+  const prima: ObjId[] = voce.includes('lavastoviglie') ? ['lavastoviglie', 'frigo', 'dispensa'] : ['frigo', 'dispensa', 'lavastoviglie']
+  const altre = (Object.keys(ent) as ObjId[]).filter((e) => !prima.includes(e) && e !== 'lista' && ent[e].inventario)
+  const ordine = [...(conLista ? ['lista' as ObjId] : []), ...prima, ...altre]
   const w = new Set(parole(voce))
   let meglio: (Trovato & { n: number }) | null = null
   for (const e of ordine)
@@ -94,7 +95,7 @@ export function eseguiComando(testo: string): Esito {
       const a = cercaAttivita(m[1])
       if (a) {
         c.fatto(a.e, a.id)
-        msg.push(`Fatto: ${a.nome}`)
+        msg.push(`Fatto: ${a.nome} · ${objects[a.e].nome}`)
         oggetto = a.e
       } else msg.push('Non trovo questa attività. Puoi crearla con “+ Attività” sull’oggetto.')
     }

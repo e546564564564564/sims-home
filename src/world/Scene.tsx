@@ -4,6 +4,7 @@ import { useNav } from '../ui/store'
 import House from './House'
 import SalaCucina from './SalaCucina'
 import Stanze from './Stanze'
+import StatoVivo from './StatoVivo'
 import CameraRig from './CameraRig'
 import { gesture } from './camera'
 
@@ -36,6 +37,7 @@ export default function Scene() {
       <House />
       <SalaCucina />
       <Stanze />
+      <StatoVivo />
       <CameraRig />
     </Canvas>
   )

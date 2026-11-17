@@ -57,9 +57,10 @@ export const useCasa = create<Casa>((set, get) => {
         salvate = await leggiTutte()
       } catch {}
       const m = mappa(entitaIniziali())
-      for (const e of salvate) m[e.id] = e // i dati salvati vincono; nuove entità restano dal seme
+      // i dati salvati vincono; nuove entità (e inventari nuovi di entità già salvate) arrivano dal seme
+      for (const e of salvate) m[e.id] = { ...e, inventario: e.inventario ?? m[e.id]?.inventario }
       set({ entita: m, pronta: true })
-      if (salvate.length !== Object.keys(m).length) salva(m)
+      salva(m)
       navigator.storage?.persist?.()
     },
 
@@ -158,6 +159,19 @@ export const useCasa = create<Casa>((set, get) => {
 
 // Attività da fare (oggi o già passate) di un'entità.
 export const daFare = (e?: Entita) => (e?.attivita ?? []).filter((a) => giorniA(a.prossima) <= 0)
+
+// Stato vivo di una stanza: 0 in ordine, 1 vissuta, 2 da sistemare. Dipende dal tempo, non dal merito.
+export function grado(e?: Entita): 0 | 1 | 2 {
+  let g: 0 | 1 | 2 = 0
+  for (const a of e?.attivita ?? []) {
+    if (!a.ogni) continue
+    const giorni = a.ogni.n * { g: 1, s: 7, m: 30 }[a.ogni.u]
+    const resta = giorniA(a.prossima)
+    const x = resta < 0 ? 2 : resta <= giorni * 0.3 ? 1 : 0
+    if (x > g) g = x
+  }
+  return g
+}
 
 // Tutte le voci in lista della spesa, da qualsiasi entità.
 export function vociInLista(m: Mappa) {
