@@ -22,6 +22,7 @@ type Casa = {
   nuovaAttivita: (e: ObjId, a: Omit<Attivita, 'id'>) => void
   fatto: (e: ObjId, a: string) => void
   eliminaAttivita: (e: ObjId, a: string) => void
+  imposta: (e: ObjId, chiave: string, valore: string) => void
   gruppo: (fn: () => void) => void // più azioni annullabili in un colpo solo
   annulla: () => void
   chiudiAvviso: () => void
@@ -131,6 +132,11 @@ export const useCasa = create<Casa>((set, get) => {
     eliminaAttivita: (e, id) =>
       modifica(e, `Tolta l'attività: ${get().entita[e].attivita!.find((x) => x.id === id)!.nome}`, (ent) => {
         ent.attivita = ent.attivita!.filter((y) => y.id !== id)
+      }),
+
+    imposta: (e, chiave, valore) =>
+      modifica(e, valore ? 'Impostazione salvata' : 'Impostazione tolta', (ent) => {
+        ent.impostazioni = { ...ent.impostazioni, [chiave]: valore }
       }),
 
     gruppo: (fn) => {

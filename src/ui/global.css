@@ -90,3 +90,5 @@ body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; co
 .azioni { display: flex; justify-content: flex-end; gap: 8px; }
 .azioni button:first-child { border: none; background: none; color: #9A8A7E; font: 600 14px system-ui, sans-serif; }
 .storico { display: flex; flex-direction: column; }
+.gcal { flex: 1; min-height: 200px; width: 100%; border: none; border-radius: 16px; background: #fff; }
+.apri { text-align: center; text-decoration: none; }

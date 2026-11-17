@@ -30,4 +30,5 @@ export type Entita = {
   attivita?: Attivita[]
   scadenze?: Scadenza[]
   storico: Evento[]
+  impostazioni?: Record<string, string> // es. l'indirizzo del calendario Google
 }

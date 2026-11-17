@@ -3,6 +3,7 @@ import { useNav } from './store'
 import { objects, type ObjId } from '../data/objects'
 import { useCasa, vociInLista, daFare } from '../data/casa'
 import BloccoAttivita from './Attivita'
+import Calendario from './Calendario'
 import { livelli, nomeLivello, type Livello, type Prodotto } from '../data/entita'
 
 const pieni: Record<Livello, number> = { pieno: 4, meta: 2, quasi: 1, finito: 0 }
@@ -102,7 +103,7 @@ export default function Panel() {
   const finendo = inv?.some((p) => (p.livello === 'finito' || p.livello === 'quasi') && !p.inLista)
   const conAttivita = id !== 'lista' && id !== 'calendario'
   const daFareOra = daFare(ent).length > 0
-  const storico = ent?.storico.slice(0, tutto ? 50 : 3) ?? []
+  const storico = (conAttivita && ent?.storico.slice(0, tutto ? 50 : 3)) || []
   return (
     <aside className="pannello">
       <header>
@@ -118,7 +119,7 @@ export default function Panel() {
       ) : inv ? (
         <Inventario e={id} prodotti={inv} />
       ) : id === 'calendario' ? (
-        <p className="nota">Qui comparirà il calendario Google condiviso della casa.</p>
+        <Calendario />
       ) : null}
       {conAttivita && <BloccoAttivita e={id} />}
       {storico.length > 0 && (
