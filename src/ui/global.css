@@ -1,0 +1,14 @@
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; height: 100%; overflow: hidden; background: #F3EADF; }
+body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color: #4B3F38; -webkit-tap-highlight-color: transparent; user-select: none; }
+.mic { position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; z-index: 10; }
+.mic-btn { width: 56px; height: 56px; border-radius: 50%; border: none; background: #C9A133; box-shadow: 0 4px 14px rgba(90,60,30,.25); display: grid; place-items: center; cursor: pointer; transition: transform .15s; }
+.mic-btn:active { transform: scale(.94); }
+.mic-btn.attivo { animation: pulsa 1.2s ease-in-out infinite; }
+@keyframes pulsa { 50% { box-shadow: 0 0 0 10px rgba(201,161,51,.25); } }
+.fumetto { max-width: 320px; background: #FFFBF6; padding: 10px 14px; border-radius: 16px 16px 16px 4px; box-shadow: 0 4px 14px rgba(90,60,30,.15); font-size: 15px; line-height: 1.35; }
+.ruota { display: none; }
+@media (orientation: portrait) {
+  .ruota { display: grid; place-items: center; position: fixed; inset: 0; background: #F3EADF; z-index: 100; text-align: center; font-size: 18px; font-weight: 600; padding: 24px; }
+  .ruota-icona { font-size: 56px; margin-bottom: 12px; color: #C9A133; }
+}
